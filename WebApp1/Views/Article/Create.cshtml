@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ArticleModel
+
+<h2>Créer un nouvel article</h2>
+<form asp-action="Create">
+    <div class="form-group">
+        <p>
+            <label>Nom : </label>
+            <input asp-for="Nom" type="text" class="form-control" required />
+        </p>
+        <p>
+            <label>Prix : </label>
+            <input asp-for="Prix" type="number" class="form-control" required step="any"/>
+        </p>
+        <p>
+            <label>EAN : </label>
+            <input asp-for="CodeEAN13" type="text" class="form-control" required/>
+        </p>
+        <p>
+            <label>Description : </label>
+            <input asp-for="Description" type="text" class="form-control" />
+        </p>
+        <p>
+            <label>Categorie : </label>
+            <input asp-for="IdCategorie" type="number" class="form-control" required/>
+        </p>
+    </div>
+    <button type="submit" class="btn btn-primary">Valider</button>
+</form>

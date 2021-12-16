@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Categorie]
+(
+	IdCategorie INT NOT NULL PRIMARY KEY IDENTITY,
+	C_Libelle VARCHAR(50) NOT NULL UNIQUE
+)

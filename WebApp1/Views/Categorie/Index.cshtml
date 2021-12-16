@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebApp1.Models.CategorieModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Liste des catégories</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCategorie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Libelle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCategorie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Libelle)
+            </td>
+            <td>
+            @Html.ActionLink("Détails", "Details", new { id = item.IdCategorie }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.IdCategorie }) |
+            @Html.ActionLink("Articles", "GetArticlesByCategorie", "Article", new { catId = item.IdCategorie }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.IdCategorie })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
