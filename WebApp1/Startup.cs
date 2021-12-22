@@ -3,6 +3,7 @@ using ArticleDAL.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp1.Tools;
 
 namespace WebApp1
 {
@@ -27,6 +29,25 @@ namespace WebApp1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<SessionManager>();
+
+            services.AddDistributedMemoryCache();
+            //services.AddDistributedSqlServerCache(options=> {
+            //    options.ConnectionString = @"Data Source=FORMAVDI1613\TFTIC;Initial Catalog=ArticleDbSessions;Integrated Security=True;";
+            //    options.SchemaName = "dbo";
+            //    options.TableName = "SessionCache";
+            //});
+            services.AddSession(options => {
+                options.Cookie.Name = "myCookie";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            services.Configure<CookiePolicyOptions>(options => {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
             services.AddScoped<IArticleRepository, ArticleService>();
             services.AddScoped<ICategorieRepository, CategorieService>();
@@ -45,6 +66,9 @@ namespace WebApp1
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
+            app.UseCookiePolicy();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

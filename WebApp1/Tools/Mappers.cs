@@ -21,6 +21,30 @@ namespace WebApp1.Tools
                 IdCategorie = a.IdCategorie
             };
         }
+        public static WEB.ArticleFormModel toWebForm(this DAL.Article a)
+        {
+            return new WEB.ArticleFormModel
+            {
+                Id = a.IdArticle,
+                Nom = a.Nom,
+                CodeEAN13 = a.CodeEAN13,
+                Prix = a.Prix,
+                Description = a.Description,
+                IdCategorie = a.IdCategorie
+            };
+        }
+        public static DAL.Article toDal(this WEB.ArticleFormModel a)
+        {
+            return new DAL.Article
+            {
+                IdArticle = a.Id,
+                Nom = a.Nom,
+                CodeEAN13 = a.CodeEAN13,
+                Prix = a.Prix,
+                Description = a.Description,
+                IdCategorie = a.IdCategorie
+            };
+        }
         public static DAL.Article toDal(this WEB.ArticleModel a)
         {
             return new DAL.Article

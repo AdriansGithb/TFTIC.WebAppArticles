@@ -6,19 +6,26 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp1.Models;
+using WebApp1.Tools;
 
 namespace WebApp1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
+        private readonly SessionManager _sessionManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(SessionManager sessionManager)
         {
-            _logger = logger;
+            _sessionManager = sessionManager;
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
         {
             return View();
         }

@@ -2,14 +2,14 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model ArticleModel
+@model ArticleFormModel
 
-<h2>Détail de l'article @Model.IdArticle</h2>
+<h2>Détail de l'article @Model.Id</h2>
 
 
 <form asp-action="Edit">
     <div class="form-group">
-        <input asp-for="IdArticle" type="hidden" value="@Model.IdArticle" />
+        <input asp-for="Id" type="hidden" value="@Model.Id" />
         <p>
             <label>Nom : </label>
             <input asp-for="Nom" type="text" value="@Model.Nom" class="form-control" required/>
@@ -27,8 +27,21 @@
             <input asp-for="Description" type="text" value="@Model.Description" class="form-control" />
         </p>
         <p>
-            <label>Categorie : </label>
-            <input asp-for="IdCategorie" type="number" value="@Model.IdCategorie" class="form-control" required />
+            <label asp-for="IdCategorie" class="control-label">Categorie : </label>
+            <select asp-for="IdCategorie">
+                @foreach (CategorieModel cat in @Model.CategorieList)
+                {
+                    if (@cat.IdCategorie == Model.IdCategorie)
+                    {
+                        <option value="@cat.IdCategorie" selected>@cat.Libelle</option>
+                    }
+                    else
+                    {<option value="@cat.IdCategorie">@cat.Libelle</option>}
+
+                    }
+
+            </select>
+
         </p>
     </div>
     <button type="submit" class="btn btn-primary">Modifier</button>

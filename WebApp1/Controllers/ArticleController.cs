@@ -42,35 +42,40 @@ namespace WebApp1.Controllers
         // GET: ArticleController/Create
         public ActionResult Create()
         {
-            return View();
+            ArticleFormModel newArticleForm = new ArticleFormModel();
+            newArticleForm.CategorieList = _catService.GetAll().Select(c => c.toWeb());
+            return View(newArticleForm);
         }
 
         // POST: ArticleController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ArticleModel newArticle)
+        public ActionResult Create(ArticleFormModel newArticle)
         {
             try
             {
+                if (!ModelState.IsValid) return View(newArticle);
                 _service.Create(newArticle.toDal());
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(newArticle);
             }
         }
 
         // GET: ArticleController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_service.GetById(id).toWeb());
+            ArticleFormModel newArticleForm = _service.GetById(id).toWebForm();
+            newArticleForm.CategorieList = _catService.GetAll().Select(c => c.toWeb());
+            return View(newArticleForm);
         }
 
         // POST: ArticleController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ArticleModel modifArticle)
+        public ActionResult Edit(ArticleFormModel modifArticle)
         {
             _service.Update(modifArticle.toDal());
                 return RedirectToAction("Index");
